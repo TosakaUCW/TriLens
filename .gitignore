@@ -1,0 +1,50 @@
+data/
+saves/
+outputs/
+logs/
+
+# Local tool state
+.codex
+
+# Python cache/artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# Local assistant/editor state
+.claude/
+CLAUDE.md
+
+# Archives and temporary files
+*.zip
+tmp.md
+texput.log
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.nav
+*.snm
+*.vrb
+*.xdv
+paper/main.pdf
