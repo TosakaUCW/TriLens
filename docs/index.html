@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TriLens | Per-Layer Logit-Lens Entropy for White-Box Hallucination Detection</title>
+    <meta
+      name="description"
+      content="Project page for TriLens, a white-box hallucination detector that uses per-layer logit-lens entropy from attention, feed-forward, and residual-stream readouts."
+    >
+    <meta
+      name="keywords"
+      content="TriLens, hallucination detection, white-box detection, logit lens, entropy, interpretability, language models"
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Castoro:ital@0;1&family=Google+Sans:wght@400;500;700&family=Noto+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    >
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    >
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css"
+    >
+    <link rel="stylesheet" href="assets/css/site.css">
+  </head>
+  <body>
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-2 publication-title">
+                TriLens: Per-Layer Logit-Lens Entropy for White-Box Hallucination Detection
+              </h1>
+
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">Anonymous EMNLP Submission</span>
+              </div>
+
+              <div class="is-size-5 publication-venue">
+                <span class="author-block">EMNLP Submission</span><br>
+              </div>
+
+              <p class="publication-summary">
+                TriLens is a compact white-box hallucination detector that tracks how internal certainty forms across
+                transformer depth by reading attention, feed-forward, and residual-stream states through the model's own
+                logit lens.
+              </p>
+
+              <div class="column has-text-centered">
+                <div class="publication-links">
+                  <span class="link-block">
+                    <a
+                      href="#"
+                      class="external-link button is-normal is-rounded is-dark"
+                      aria-disabled="true"
+                    >
+                      <span class="icon">
+                        <i class="fa-solid fa-file-lines"></i>
+                      </span>
+                      <span>Paper coming soon</span>
+                    </a>
+                  </span>
+                  <span class="link-block">
+                    <a
+                      href="https://github.com/TosakaUCW/TriLens"
+                      class="external-link button is-normal is-rounded is-dark"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <span class="icon">
+                        <i class="fab fa-github"></i>
+                      </span>
+                      <span>Code</span>
+                    </a>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section paper-section" id="overview">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Overview</h2>
+            <div class="content has-text-justified section-copy">
+              <p>
+                When a language model hallucinates, the final answer is wrong, but the mistake is not necessarily
+                invisible inside the model. Different internal pathways may remain uncertain, disagree in how quickly
+                they sharpen, or commit to competing continuations before the output is produced.
+              </p>
+              <p>
+                TriLens turns this intuition into a compact representation: at every layer, it reads the multi-head
+                self-attention output, the feed-forward output, and the residual stream through the model's own logit
+                lens, then records only the entropy of each readout.
+              </p>
+              <p>
+                The resulting trajectory describes how certainty forms across depth and across modules, without storing
+                high-dimensional hidden states or sampling multiple generations.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section paper-section" id="framework">
+      <div class="container is-max-widescreen">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">TriLens Framework</h2>
+            <div class="content has-text-justified section-copy">
+              <p>
+                TriLens extracts three module-wise entropy trajectories from each decoder layer: attention-output
+                entropy, feed-forward-output entropy, and residual-stream entropy. These lightweight signals are then
+                aggregated and passed to simple probes for hallucination detection.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns is-centered visual-block">
+          <div class="column is-full has-text-centered">
+            <img
+              src="figs/pipeline.png"
+              alt="Overview of the TriLens pipeline for module-wise logit-lens entropy extraction and hallucination detection."
+              class="center paper-image image-xl"
+            >
+            <p class="image-caption">
+              TriLens reads multiple internal computation paths through the model vocabulary lens and tracks their
+              entropy across layers as a compact white-box signal.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section paper-section" id="mechanism">
+      <div class="container is-max-widescreen">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Mechanistic Motivation</h2>
+            <div class="content has-text-justified section-copy">
+              <p>
+                Supported answers tend to show coordinated entropy sharpening across internal readouts, while
+                hallucinated answers can retain higher, less stable, or less synchronized uncertainty across depth.
+                Measuring entropy separately for attention, feed-forward, and residual pathways makes this behavior
+                visible without learning over full hidden states.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns is-centered visual-block">
+          <div class="column is-full has-text-centered">
+            <img
+              src="figs/mechanism.png"
+              alt="Mechanistic view of how module-wise logit-lens entropy reflects internal uncertainty."
+              class="center paper-image image-large"
+            >
+            <p class="image-caption">
+              Module-wise logit-lens entropy exposes how uncertainty enters and resolves along different computation
+              pathways during generation.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section paper-section" id="analysis">
+      <div class="container is-max-widescreen">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Layer and Module Analysis</h2>
+            <div class="content has-text-justified section-copy">
+              <p>
+                The three entropy trajectories provide complementary evidence. Per-layer analyses show where the signal
+                concentrates across model depth, while module-level comparisons reveal that attention, feed-forward, and
+                residual readouts capture distinct aspects of hallucination-relevant uncertainty.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns is-centered visual-block">
+          <div class="column is-half has-text-centered">
+            <img
+              src="figs/layer_heatmap.svg"
+              alt="Layer-wise TriLens hallucination detection signal heatmap."
+              class="center paper-image image-medium"
+            >
+            <p class="image-caption">
+              Layer-wise signal strength highlights where hallucination-relevant uncertainty emerges.
+            </p>
+          </div>
+          <div class="column is-half has-text-centered">
+            <img
+              src="figs/complementarity.svg"
+              alt="Complementarity between TriLens module-wise entropy trajectories."
+              class="center paper-image image-medium"
+            >
+            <p class="image-caption">
+              Attention, feed-forward, and residual-stream entropies provide complementary detection evidence.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section paper-section" id="generalization">
+      <div class="container is-max-widescreen">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Generalization</h2>
+            <div class="content has-text-justified section-copy">
+              <p>
+                Because TriLens stores compact entropy trajectories rather than high-dimensional activations, it supports
+                lightweight probe training and comparison across datasets, models, and aggregation strategies.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns is-centered visual-block">
+          <div class="column is-full has-text-centered">
+            <img
+              src="figs/generalization_methods.svg"
+              alt="Generalization results for TriLens across evaluation settings."
+              class="center paper-image image-wide"
+            >
+            <p class="image-caption">
+              TriLens evaluates whether module-wise entropy trajectories transfer across hallucination detection settings.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section paper-section" id="citation">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Citation</h2>
+            <div class="content has-text-justified section-copy">
+              <p>
+                Citation information will be added after the paper is publicly available.
+              </p>
+              <pre><code>@misc{trilens2026,
+  title = {TriLens: Per-Layer Logit-Lens Entropy for White-Box Hallucination Detection},
+  author = {Anonymous},
+  year = {2026},
+  note = {EMNLP submission}
+}</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="content has-text-centered footer-copy">
+        <p>
+          This website is adapted from the RAGLens project page template.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

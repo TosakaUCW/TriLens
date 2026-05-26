@@ -1,5 +1,7 @@
 # TriLens
 
+[![Homepage](https://img.shields.io/badge/Homepage-TriLens-blue)](https://tosakaucw.github.io/TriLens/)
+
 TriLens is a white-box hallucination detection toolkit based on per-layer logit-lens entropy. It extracts module-wise entropy trajectories from transformer decoder layers and trains lightweight probes for hallucination detection.
 
 ## Core idea
