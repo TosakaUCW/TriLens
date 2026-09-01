@@ -43,11 +43,26 @@
               </h1>
 
               <div class="is-size-5 publication-authors">
-                <span class="author-block">Anonymous EMNLP Submission</span>
+                <span class="author-block">Bohan Yang<sup>1,2,3</sup>,</span>
+                <span class="author-block">Yijun Gong<sup>5</sup>,</span>
+                <span class="author-block">Zhi Zhang<sup>6</sup>,</span>
+                <span class="author-block">Ge Zhang<sup>1</sup>,</span>
+                <span class="author-block">Wenpeng Xing<sup>1,2,*</sup>,</span>
+                <span class="author-block">Meng Han<sup>1,2,4</sup></span>
+              </div>
+
+              <div class="is-size-6 publication-affiliations">
+                <span class="author-block"><sup>1</sup>Zhejiang University,</span>
+                <span class="author-block"><sup>2</sup>Binjiang Institute of Zhejiang University,</span>
+                <span class="author-block"><sup>3</sup>Beijing Normal-Hong Kong Baptist University,</span>
+                <span class="author-block"><sup>4</sup>GenTel.io,</span>
+                <span class="author-block"><sup>5</sup>Great Bay University,</span>
+                <span class="author-block"><sup>6</sup>University of California San Diego</span><br>
+                <span class="author-block"><sup>*</sup>Corresponding author</span>
               </div>
 
               <div class="is-size-5 publication-venue">
-                <span class="author-block">EMNLP Submission</span><br>
+                <span class="author-block">Findings of EMNLP 2026</span><br>
               </div>
 
               <p class="publication-summary">
@@ -73,7 +88,20 @@
                   </span>
                   <span class="link-block">
                     <a
-                      href="https://anonymous.4open.science/r/TriLens"
+                      href="https://arxiv.org/abs/2606.01033"
+                      class="external-link button is-normal is-rounded is-dark"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                      </span>
+                      <span>arXiv</span>
+                    </a>
+                  </span>
+                  <span class="link-block">
+                    <a
+                      href="https://github.com/TosakaUCW/TriLens"
                       class="external-link button is-normal is-rounded is-dark"
                       target="_blank"
                       rel="noopener"
@@ -92,11 +120,11 @@
       </div>
     </section>
 
-    <section class="section paper-section" id="overview">
+    <section class="section paper-section" id="introduction">
       <div class="container is-max-desktop">
         <div class="columns is-centered has-text-centered">
           <div class="column is-four-fifths">
-            <h2 class="title is-3">Overview</h2>
+            <h2 class="title is-3">Introduction</h2>
             <div class="content has-text-justified section-copy">
               <p>
                 When a language model hallucinates, the final answer is wrong, but the mistake is not necessarily
@@ -110,7 +138,8 @@
               </p>
               <p>
                 The resulting trajectory describes how certainty forms across depth and across modules, without storing
-                high-dimensional hidden states or sampling multiple generations.
+                high-dimensional hidden states or sampling multiple generations. This makes TriLens compact enough for
+                lightweight probes while preserving the internal structure needed for analysis.
               </p>
             </div>
           </div>
@@ -149,17 +178,76 @@
       </div>
     </section>
 
-    <section class="section paper-section" id="mechanism">
+    <section class="section paper-section" id="main-results">
       <div class="container is-max-widescreen">
         <div class="columns is-centered has-text-centered">
           <div class="column is-four-fifths">
-            <h2 class="title is-3">Mechanistic Motivation</h2>
+            <h2 class="title is-3">Main Results</h2>
             <div class="content has-text-justified section-copy">
               <p>
-                Supported answers tend to show coordinated entropy sharpening across internal readouts, while
-                hallucinated answers can retain higher, less stable, or less synchronized uncertainty across depth.
-                Measuring entropy separately for attention, feed-forward, and residual pathways makes this behavior
-                visible without learning over full hidden states.
+                We evaluate TriLens on three instruction-tuned language models and four English QA benchmarks under a
+                matched protocol with six baselines. The compact entropy trajectories provide a strong and consistent
+                signal across the full model–dataset grid.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns is-centered result-summary">
+          <div class="column is-one-third">
+            <div class="result-card has-text-centered">
+              <p class="result-number">12 / 12</p>
+              <p class="result-label">cells above ICR Probe</p>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div class="result-card has-text-centered">
+              <p class="result-number">11 / 12</p>
+              <p class="result-label">best overall results</p>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div class="result-card has-text-centered">
+              <p class="result-number">+12.1</p>
+              <p class="result-label">mean AUROC points vs. ICR Probe</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns is-centered visual-block">
+          <div class="column is-full has-text-centered">
+            <div class="content has-text-justified visual-copy">
+              <h3 class="title is-4">Complementary Module Signals</h3>
+              <p>
+                The gain is not confined to the residual stream. Attention, feed-forward, and residual-stream entropy
+                trajectories capture different aspects of hallucination-relevant uncertainty.
+              </p>
+            </div>
+            <img
+              src="figs/complementarity.svg"
+              alt="Layer-wise separation and feature ablations showing the complementarity of TriLens module-wise entropy trajectories."
+              class="center paper-image image-wide"
+              loading="lazy"
+            >
+            <p class="image-caption">
+              Adding either attention or feed-forward entropy to the residual-stream signal improves all 12 cells; the
+              complete three-trajectory feature improves further in every cell.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section paper-section" id="mechanistic-analysis">
+      <div class="container is-max-widescreen">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Mechanistic Analysis</h2>
+            <div class="content has-text-justified section-copy">
+              <p>
+                TriLens also exposes where hallucination-relevant uncertainty appears inside the model. Trajectory and
+                layer-wise analyses reveal that the signal changes across depth and that the most discriminative depth
+                depends on both the model and the benchmark.
               </p>
             </div>
           </div>
@@ -167,54 +255,44 @@
 
         <div class="columns is-centered visual-block">
           <div class="column is-full has-text-centered">
-            <img
-              src="figs/mechanism.png"
-              alt="Mechanistic view of how module-wise logit-lens entropy reflects internal uncertainty."
-              class="center paper-image image-large"
-            >
-            <p class="image-caption">
-              Module-wise logit-lens entropy exposes how uncertainty enters and resolves along different computation
-              pathways during generation.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section paper-section" id="analysis">
-      <div class="container is-max-widescreen">
-        <div class="columns is-centered has-text-centered">
-          <div class="column is-four-fifths">
-            <h2 class="title is-3">Layer and Module Analysis</h2>
-            <div class="content has-text-justified section-copy">
+            <div class="content has-text-justified visual-copy">
+              <h3 class="title is-4">Entropy Dynamics Across Depth</h3>
               <p>
-                The three entropy trajectories provide complementary evidence. Per-layer analyses show where the signal
-                concentrates across model depth, while module-level comparisons reveal that attention, feed-forward, and
-                residual readouts capture distinct aspects of hallucination-relevant uncertainty.
+                Supported and hallucinated responses can follow different entropy trajectories as internal computation
+                progresses through the decoder stack.
               </p>
             </div>
+            <img
+              src="figs/mechanism.png"
+              alt="Per-layer residual-stream logit-lens entropy and descriptive AUROC for correct and hallucinated responses."
+              class="center paper-image image-large"
+              loading="lazy"
+            >
+            <p class="image-caption">
+              The trajectory view shows how uncertainty can enter, persist, and resolve differently across generation
+              settings.
+            </p>
           </div>
         </div>
 
         <div class="columns is-centered visual-block">
-          <div class="column is-half has-text-centered">
+          <div class="column is-full has-text-centered">
+            <div class="content has-text-justified visual-copy">
+              <h3 class="title is-4">Peak-Discriminative Depth</h3>
+              <p>
+                A descriptive single-layer analysis asks where residual-stream entropy most clearly separates correct
+                from hallucinated responses, without using that layer selection inside TriLens.
+              </p>
+            </div>
             <img
               src="figs/layer_heatmap.svg"
-              alt="Layer-wise TriLens hallucination detection signal heatmap."
+              alt="Heatmap of peak-discriminative relative depth across models and benchmarks."
               class="center paper-image image-medium"
+              loading="lazy"
             >
             <p class="image-caption">
-              Layer-wise signal strength highlights where hallucination-relevant uncertainty emerges.
-            </p>
-          </div>
-          <div class="column is-half has-text-centered">
-            <img
-              src="figs/complementarity.svg"
-              alt="Complementarity between TriLens module-wise entropy trajectories."
-              class="center paper-image image-medium"
-            >
-            <p class="image-caption">
-              Attention, feed-forward, and residual-stream entropies provide complementary detection evidence.
+              Peak depth varies across model–dataset pairs, supporting the use of the full layer-wise trajectory rather
+              than a universal hand-picked layer.
             </p>
           </div>
         </div>
@@ -225,11 +303,12 @@
       <div class="container is-max-widescreen">
         <div class="columns is-centered has-text-centered">
           <div class="column is-four-fifths">
-            <h2 class="title is-3">Generalization</h2>
+            <h2 class="title is-3">Generalization Across Settings</h2>
             <div class="content has-text-justified section-copy">
               <p>
-                Because TriLens stores compact entropy trajectories rather than high-dimensional activations, it supports
-                lightweight probe training and comparison across datasets, models, and aggregation strategies.
+                Beyond per-benchmark fitting, we test whether the compact entropy representation remains useful under
+                benchmark shift. The cross-dataset diagnostic trains on one benchmark and evaluates on another while
+                keeping the model family fixed.
               </p>
             </div>
           </div>
@@ -237,42 +316,69 @@
 
         <div class="columns is-centered visual-block">
           <div class="column is-full has-text-centered">
+            <div class="content has-text-justified visual-copy">
+              <h3 class="title is-4">Cross-Dataset Transfer</h3>
+              <p>
+                We compare TriLens with ICR Probe and SAPLMA across every train-on-row, test-on-column benchmark pair.
+              </p>
+            </div>
             <img
               src="figs/generalization_methods.svg"
-              alt="Generalization results for TriLens across evaluation settings."
+              alt="Cross-dataset generalization heatmaps for TriLens, ICR Probe, and SAPLMA."
               class="center paper-image image-wide"
+              loading="lazy"
             >
             <p class="image-caption">
-              TriLens evaluates whether module-wise entropy trajectories transfer across hallucination detection settings.
+              TriLens is strongest on all 12 off-diagonal transfers, reaching a mean AUROC of 0.848 compared with 0.738
+              for ICR Probe and 0.678 for SAPLMA. We treat this as a benchmark-shift diagnostic rather than universal
+              cross-domain generalization.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section paper-section" id="citation">
-      <div class="container is-max-desktop">
-        <div class="columns is-centered has-text-centered">
-          <div class="column is-four-fifths">
-            <h2 class="title is-3">Citation</h2>
-            <div class="content has-text-justified section-copy">
-              <p>
-                Citation information will be added after the paper is publicly available.
-              </p>
-              <pre><code>@misc{trilens2026,
-  title = {TriLens: Per-Layer Logit-Lens Entropy for White-Box Hallucination Detection},
-  author = {Anonymous},
+    <section class="section paper-section" id="bibtex">
+      <div class="container is-max-desktop content">
+        <h2 class="title is-3 has-text-centered">BibTeX</h2>
+        <p>If you find TriLens useful, please cite our Findings of EMNLP 2026 paper.</p>
+        <pre><code>@inproceedings{yang2026trilens,
+  title = {{TriLens}: Per-Layer Logit-Lens Entropy for White-Box Hallucination Detection},
+  author = {Yang, Bohan and Gong, Yijun and Zhang, Zhi and Zhang, Ge and Xing, Wenpeng and Han, Meng},
+  booktitle = {Findings of the Association for Computational Linguistics: EMNLP 2026},
   year = {2026},
-  note = {EMNLP submission}
+  publisher = {Association for Computational Linguistics},
+  note = {To appear}
 }</code></pre>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 
     <footer class="footer">
-      <div class="content has-text-centered footer-copy"></div>
+      <div class="container">
+        <div class="content has-text-centered">
+          <a class="icon-link" href="assets/paper.pdf" target="_blank" rel="noopener" aria-label="Paper">
+            <i class="fa-solid fa-file-lines"></i>
+          </a>
+          <a class="icon-link" href="https://arxiv.org/abs/2606.01033" target="_blank" rel="noopener" aria-label="arXiv">
+            <i class="ai ai-arxiv"></i>
+          </a>
+          <a class="icon-link" href="https://github.com/TosakaUCW/TriLens" target="_blank" rel="noopener" aria-label="Code">
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
+        <div class="columns is-centered">
+          <div class="column is-8">
+            <div class="content has-text-centered footer-copy">
+              <p>
+                Website presentation inspired by <a href="https://github.com/gzxiong/RAGLens">RAGLens</a> and adapted
+                from <a href="https://nerfies.github.io/">Nerfies</a> and
+                <a href="https://mathvista.github.io/">MathVista</a> under
+                <a class="license-link" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </footer>
   </body>
 </html>

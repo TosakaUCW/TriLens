@@ -22,11 +22,13 @@ a:hover {
 }
 
 .publication-authors,
+.publication-affiliations,
 .publication-venue {
   color: #363636;
 }
 
 .publication-authors .author-block,
+.publication-affiliations .author-block,
 .publication-venue .author-block {
   display: inline-block;
   margin: 0 0.25rem 0.45rem;
@@ -76,6 +78,33 @@ a:hover {
 
 .visual-copy .title {
   margin-bottom: 0.7rem;
+}
+
+.result-summary {
+  max-width: 58rem;
+  margin: 1.4rem auto 0.5rem;
+}
+
+.result-card {
+  height: 100%;
+  padding: 1.35rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fafafa;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.035);
+}
+
+.result-number {
+  margin-bottom: 0.3rem;
+  font-family: "Google Sans", "Noto Sans", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #111827;
+}
+
+.result-label {
+  color: #4a4a4a;
 }
 
 .center {
@@ -159,6 +188,10 @@ code {
 
 .footer-copy {
   color: #6b7280;
+}
+
+.license-link {
+  white-space: nowrap;
 }
 
 @media screen and (max-width: 768px) {

@@ -1,8 +1,12 @@
 # TriLens
 
-[![Homepage](https://img.shields.io/badge/Homepage-TriLens-blue)](https://anonymous.4open.science/w/TriLens)
+[![Homepage](https://img.shields.io/badge/Homepage-TriLens-blue)](https://tosakaucw.github.io/TriLens/)
+[![Paper](https://img.shields.io/badge/arXiv-2606.01033-b31b1b.svg)](https://arxiv.org/abs/2606.01033)
+[![Venue](https://img.shields.io/badge/EMNLP_2026-Findings-8a2be2)](https://2026.emnlp.org/)
 
 TriLens is a lightweight white-box hallucination detection toolkit based on per-layer logit-lens entropy. Instead of training probes on high-dimensional hidden states, TriLens summarizes how internal certainty evolves across transformer depth by reading three module-wise states through the model's vocabulary lens.
+
+**Accepted to Findings of EMNLP 2026.**
 
 ## Overview
 
@@ -135,6 +139,19 @@ python scripts/analyze_kca_diagnostic.py --help
 - Use `--lens_dtype float32` if logit-lens entropy produces overflow or NaN values in fp16.
 - Store datasets, extracted features, logs, and checkpoints under ignored directories such as `data/`, `outputs/`, `saves/`, and `logs/`.
 - The repository does not include benchmark datasets or model weights; please obtain them from their original sources and follow their licenses.
+
+## Citation
+
+```bibtex
+@inproceedings{yang2026trilens,
+  title     = {{TriLens}: Per-Layer Logit-Lens Entropy for White-Box Hallucination Detection},
+  author    = {Yang, Bohan and Gong, Yijun and Zhang, Zhi and Zhang, Ge and Xing, Wenpeng and Han, Meng},
+  booktitle = {Findings of the Association for Computational Linguistics: EMNLP 2026},
+  year      = {2026},
+  publisher = {Association for Computational Linguistics},
+  note      = {To appear}
+}
+```
 
 ## License
 
