@@ -1,30 +1,21 @@
 <div align="center">
   <h1>TriLens: Per-Layer Logit-Lens Entropy for White-Box Hallucination Detection</h1>
 
-  <p>
-    <strong>Bohan Yang<sup>1,2,3</sup>, Yijun Gong<sup>5</sup>, Zhi Zhang<sup>6</sup>, Ge Zhang<sup>1</sup>, Wenpeng Xing<sup>1,2,*</sup>, Meng Han<sup>1,2,4</sup></strong>
-  </p>
-
-  <p>
-    <sup>1</sup>Zhejiang University &nbsp;·&nbsp;
-    <sup>2</sup>Binjiang Institute of Zhejiang University &nbsp;·&nbsp;
-    <sup>3</sup>Beijing Normal-Hong Kong Baptist University<br>
-    <sup>4</sup>GenTel.io &nbsp;·&nbsp;
-    <sup>5</sup>Great Bay University &nbsp;·&nbsp;
-    <sup>6</sup>University of California San Diego<br>
-    <sup>*</sup>Corresponding author
-  </p>
-
   <p><strong>Findings of EMNLP 2026</strong></p>
 
   <p>
-    <a href="docs/assets/paper.pdf"><img src="https://img.shields.io/badge/Paper-PDF-b31b1b.svg" alt="Paper PDF"></a>
+    <a href="https://aclanthology.org/2026.findings-emnlp.1803/"><img src="https://img.shields.io/badge/ACL-Anthology-2f80ed.svg" alt="ACL Anthology"></a>
+    <a href="https://aclanthology.org/2026.findings-emnlp.1803.pdf"><img src="https://img.shields.io/badge/Paper-PDF-b31b1b.svg" alt="Paper PDF"></a>
     <a href="https://arxiv.org/abs/2606.01033"><img src="https://img.shields.io/badge/arXiv-2606.01033-b31b1b.svg" alt="arXiv"></a>
     <a href="https://tosakaucw.github.io/TriLens/"><img src="https://img.shields.io/badge/Project-Page-2f80ed.svg" alt="Project page"></a>
     <a href="https://2026.emnlp.org/"><img src="https://img.shields.io/badge/EMNLP_2026-Findings-8a2be2.svg" alt="Findings of EMNLP 2026"></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License"></a>
   </p>
 </div>
+
+## News
+
+- **October 2026:** TriLens is officially published in [Findings of EMNLP 2026](https://aclanthology.org/2026.findings-emnlp.1803/).
 
 ## Overview
 
@@ -210,18 +201,21 @@ python scripts/run_kca_eval.py --help
 
 ## Citation
 
-The EMNLP 2026 proceedings metadata is not yet available. Please cite the current arXiv version:
+Please cite the published version in Findings of EMNLP 2026:
 
 ```bibtex
-@misc{yang2026trilens,
-  title         = {{TriLens}: Per-Layer Logit-Lens Entropy for White-Box Hallucination Detection},
-  author        = {Yang, Bohan and Gong, Yijun and Zhang, Zhi and Zhang, Ge and Xing, Wenpeng and Han, Meng},
-  year          = {2026},
-  eprint        = {2606.01033},
-  archivePrefix = {arXiv},
-  primaryClass  = {cs.AI},
-  doi           = {10.48550/arXiv.2606.01033},
-  url           = {https://arxiv.org/abs/2606.01033}
+@inproceedings{yang-etal-2026-trilens,
+  title     = {{T}ri{L}ens: Per-Layer Logit-Lens Entropy for White-Box Hallucination Detection},
+  author    = {Yang, Bohan and Gong, Yijun and Zhang, Zhi and Zhang, Ge and Xing, Wenpeng and Han, Meng},
+  editor    = {Lee, Hung-Yi and Dev, Sunipa and Li, Jessy and Elliott, Desmond},
+  booktitle = {Findings of the {A}ssociation for {C}omputational {L}inguistics: {EMNLP} 2026},
+  month     = oct,
+  year      = {2026},
+  address   = {Budapest, Hungary},
+  publisher = {Association for Computational Linguistics},
+  pages     = {38536--38553},
+  doi       = {10.18653/2026.findings-emnlp.1803},
+  url       = {https://aclanthology.org/2026.findings-emnlp.1803/}
 }
 ```
 
